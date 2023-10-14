@@ -17,23 +17,21 @@ Read the given csv file
 Convert the file into a dataframe and get information of the data.
 
 ### STEP 4
-Return the objects containing counts of unique values using (value_counts()).
-
-### STEP 5
 Plot the counts in the form of Histogram or Bar Graph.
 
-### STEP 6
+### STEP 5
 Use seaborn the bar graph comparison of data can be viewed.
 
-### STEP 7
+### STEP 6
 Find the pairwise correlation of all columns in the dataframe.corr()
 
-### STEP 8
+### STEP 7
 Save the final data set into the file
 # CODE:
-Name : A.ASHWIN KUMAR
+Name : A.ASHWIN KUMAR    
 register number : 212222100006
-## diabetes.csv
+# diabetes.csv
+## Code:
 ```
 import pandas as pd
 import numpy as np
@@ -96,7 +94,7 @@ df.corr()
 sns.heatmap(df.corr(),annot=True)
 ```
 ## OUTPUT:
-### before cleaning:
+### Dataset:
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/091d7e4b-095b-4c05-b47b-e1cb5d05fbfd)
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/8dab499b-3d6e-40d5-b854-c733ad05a692)
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/bcb9ab23-a1c1-4103-8567-05b51b0edf64)
@@ -110,9 +108,72 @@ sns.heatmap(df.corr(),annot=True)
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/9a1b9026-eec4-4c95-851d-88d1f842e08d)
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/cb813c1f-c6e0-4b13-af9f-a86a5df2783c)
 ![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/5e0058ed-daa4-46c0-bcad-3a8a2ee25a58)
-
-### SuperStore.cvs
+# RESULT:
+Thus we have read the given data of diabetes.csv and performed the multivariate analysis with different types of plots.
+# SuperStore.cvs
+## Code:
 ```
+import pandas as pd
+import numpy as np
+from scipy import stats
+import seaborn as sns
+import matplotlib.pyplot as plt
 
+data=pd.read_csv("/content/SuperStore (2).csv")
+df=pd.DataFrame(data)
+df
+df.info
+sns.boxplot(data=df)
+sns.scatterplot(data=df)
+
+z = np.abs(stats.zscore(df['Postal Code']))
+dfc=df[(z<2)]
+z = np.abs(stats.zscore(dfc['Sales']))
+dfc=dfc[(z<3)]
+
+sns.scatterplot(x=df["Postal Code"],y=df["Sales"],data=df)
+sns.barplot(x=df["Ship Mode"],y=df["Sales"],data=df)
+
+plt.figure(figsize=(17,7))
+sns.scatterplot(x=df["Postal Code"],y=df["Sales"],hue=df['Ship Mode'])
+
+states=df.loc[:,["State","Sales"]]
+states=states.groupby(by=["State"]).sum().sort_values(by="Sales")
+plt.figure(figsize=(17,7))
+sns.barplot(x=states.index,y="Sales",data=states)
+plt.xticks(rotation = 90)
+plt.xlabel=("STATES")
+plt.ylabel=("SALES")
+plt.show()
+
+states=df.loc[:,["Segment","Sales"]]
+states=states.groupby(by=["Segment"]).sum().sort_values(by="Sales")
+#plt.figure(figsize=(10,7))
+sns.barplot(x=states.index,y="Sales",data=states)
+plt.xticks(rotation = 90)
+plt.xlabel=("SEGMENT")
+plt.ylabel=("Sales")
+plt.show()
+
+sns.barplot(x=df["Segment"],y=df["Postal Code"],hue=df['Region'])
+
+df.corr()
+sns.heatmap(df.corr(),annot=True)
 ```
 ## OUTPUT:
+### Dataset:
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/200109e0-9d5e-4bab-aed0-fc0a57e448a5)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/f85264d6-90cd-421e-a3c8-d16a4d651241)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/b488d998-e8e7-4817-9053-3e8b70255a78)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/5540d416-2dc7-432f-9999-2414623111ea)
+### After cleaning:
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/fd522711-f5da-40b3-aff8-240fd343bd83)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/43f86304-79bd-4ba5-878d-2b9a0f3bc772)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/bee76c36-85a4-4562-ad56-8bc6f2fd4088)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/8e1f3aab-379f-4289-9974-eb96175d7de4)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/7a0bf7c9-de9c-42d1-a9d2-8b78458d87d3)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/c9cbcf9a-f969-4adb-a46c-4f9e1127dd20)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/eac49c1f-70e7-49b2-afc0-3fca5dfc71c8)
+![image](https://github.com/ASHWINKUMAR2903/ODD2023-Datascience-Ex-04/assets/119407186/0121fa21-5159-4d19-b951-de03bd6dbf14)
+# RESULT:
+Thus we have read the given data of SuperStore.csv and performed the multivariate analysis with different types of plots.
